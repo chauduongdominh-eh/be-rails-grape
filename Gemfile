@@ -7,6 +7,12 @@ ruby '2.7.8'
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails'
 
+# Grape API
+gem 'grape'
+gem 'grape_on_rails_routes'
+gem 'grape-swagger'
+gem 'grape-swagger-rails'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
