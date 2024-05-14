@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class API < Grape::API
-  version 'v1', using: :header, vendor: 'EH'
+  version 'v1', using: :path
   format :json
 
   resources :notes do
