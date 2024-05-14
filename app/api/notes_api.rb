@@ -4,17 +4,12 @@ class NotesAPI < Grape::API
   version 'v1', using: :path
 
   namespace :notes do
-    desc 'List user notes' do
-      tags ['Notes']
-    end
+    desc 'List user notes'
     get do
       Note.all
     end
 
-    desc 'Create a new note' do
-      tags ['Notes']
-    end
-
+    desc 'Create a new note'
     post do
       Note.create!(declared(params))
     end
@@ -23,24 +18,18 @@ class NotesAPI < Grape::API
       requires :id, type: Integer, desc: 'Note ID'
     end
     route_param :id do
-      desc 'Get a specific note' do
-        tags ['Notes']
-      end
+      desc 'Get a specific note'
       get do
         Note.find(params[:id])
       end
 
-      desc 'Update a note' do
-        tags ['Notes']
-      end
+      desc 'Update a note'
       put do
         note = Note.find(params[:id])
         note.update!(declared(params))
       end
 
-      desc 'Delete a note' do
-        tags ['Notes']
-      end
+      desc 'Delete a note'
       delete do
         Note.find(params[:id]).destroy!
       end
