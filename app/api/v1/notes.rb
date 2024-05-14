@@ -1,13 +1,26 @@
 # frozen_string_literal: true
 
 module V1
-  class NotesAPI < Grape::API
+  class Notes < Grape::API
     version 'v1', using: :path
 
+    helpers do
+      def current_user
+        return @current_user if defined?(@current_user)
+
+        username = env['HTTP_AUTHORIZATION']
+        @current_user = User.where(username: username).first
+      end
+    end
+
     namespace :notes do
+      before do
+        error!('Unauthorized', 401) unless current_user
+      end
+
       desc 'List user notes'
       get do
-        Note.all
+        Note.where(user: current_user)
       end
 
       desc 'Create a new note'
@@ -15,7 +28,7 @@ module V1
         requires :content, type: String, documentation: { param_type: 'body' }
       end
       post do
-        Note.create!(declared(params))
+        Note.create!(declared(params).merge(user: current_user))
       end
 
       params do
