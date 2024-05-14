@@ -11,7 +11,7 @@ gem 'rails'
 gem 'grape'
 gem 'grape_on_rails_routes'
 gem 'grape-swagger'
-gem 'grape-swagger-rails'
+gem 'rswag-ui'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
