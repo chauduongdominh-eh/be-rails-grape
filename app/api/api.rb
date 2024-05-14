@@ -3,6 +3,6 @@
 class API < Grape::API
   format :json
 
-  mount ::NotesAPI
+  mount ::V1::NotesAPI
   add_swagger_documentation mount_path: '/api.json'
 end
