@@ -11,11 +11,15 @@ module V1
         username = env['HTTP_AUTHORIZATION'].split.last
         @current_user = User.where(username: username).first
       end
+
+      def authenticate!
+        error!('Unauthorized', 401) unless current_user
+      end
     end
 
     namespace :notes do
       before do
-        error!('Unauthorized', 401) unless current_user
+        authenticate!
       end
 
       desc 'List user notes'
@@ -35,20 +39,32 @@ module V1
         requires :id, type: Integer, desc: 'Note ID'
       end
       route_param :id do
+        helpers do
+          def current_record
+            return @current_record if defined?(@current_record)
+
+            @current_record = Note.where(id: params[:id], user: current_user).first
+          end
+        end
+
         desc 'Get a specific note'
         get do
-          Note.find(params[:id])
+          current_record
         end
 
         desc 'Update a note'
+        params do
+          requires :content, type: String, allow_blank: false, desc: 'Note content'
+        end
         put do
-          note = Note.find(params[:id])
-          note.update!(declared(params))
+          current_record.update!(declared(params))
+          current_record
         end
 
         desc 'Delete a note'
         delete do
-          Note.find(params[:id]).destroy!
+          current_record.destroy!
+          status 204
         end
       end
     end
