@@ -8,7 +8,7 @@ module V1
       def current_user
         return @current_user if defined?(@current_user)
 
-        username = env['HTTP_AUTHORIZATION']
+        username = env['HTTP_AUTHORIZATION'].split.last
         @current_user = User.where(username: username).first
       end
     end
