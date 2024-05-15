@@ -19,8 +19,7 @@ module BeRailsGrape
     config.autoload_lib(ignore: %w[assets tasks])
 
     # Auto-load API and its subdirectories
-    config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
-    config.autoload_paths += Dir[Rails.root.join('app', 'api')]
+    config.autoload_paths += ['app/api', 'app/workers']
 
     # Configuration for the application, engines, and railties goes here.
     #

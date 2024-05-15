@@ -13,6 +13,9 @@ gem 'grape_on_rails_routes'
 gem 'grape-swagger'
 gem 'rswag-ui'
 
+# Background worker
+gem 'sidekiq'
+
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
