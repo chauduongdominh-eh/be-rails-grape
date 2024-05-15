@@ -27,6 +27,11 @@ module V1
         Note.where(user: current_user)
       end
 
+      desc 'Export all notes of current user'
+      post 'export' do
+        NotesExportWorker.perform_async('user_id' => current_user.id)
+      end
+
       desc 'Create a new note'
       params do
         requires :content, type: String, documentation: { param_type: 'body' }
